@@ -46,7 +46,7 @@ if __name__ == '__main__':
     with open("parameters.yaml") as f:
         config = yaml.load(f, Loader=yaml.Loader)
         config = bunchify(config)
-    file_name = '/experiments/local_only/master/states/lineage0.csv'
+    file_name = 'states/lineage0.csv'
     _df = pd.read_csv(file_name, sep=',', header=None, dtype='int64')
     density_evolution_map(_df)
     show_kymograph(_df)
