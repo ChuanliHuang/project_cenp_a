@@ -1,0 +1,10 @@
+lineages_to_simulate: 1
+generations_to_simulate: 2000
+nucleosomeNumber: 1000
+initialDensity: 0.02
+dilutionBias: 0.5
+replenish_rounds: 1
+sigma: 3  # standard deviation of weight function (Gaussian)
+alpha: 1  # arbitrary parameter
+beta: 0  # loss rate
+noise0_1: 1

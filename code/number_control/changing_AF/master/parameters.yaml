@@ -1,0 +1,15 @@
+simulation:
+  lineages_to_simulate: 10
+  lineage:
+    generations_to_simulate: 100000
+    nucleosome_num: 5000
+    cenp_a_fraction: 0.02
+    target_density: 0.04
+    generation:
+      dist_bias: 0.5
+      mu: 0
+      sigma : 3
+      replenish_rounds: 3
+      amplitude_factor: 1
+      amplitude_factor_long: 0.015  # 0.015
+

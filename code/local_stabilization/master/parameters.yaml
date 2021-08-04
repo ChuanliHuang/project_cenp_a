@@ -1,0 +1,14 @@
+simulation:
+  lineages_to_simulate: 1
+  lineage:
+    generations_to_simulate: 2000
+    nucleosome_num: 1000
+    cenp_a_fraction: 0.5
+    generation:
+      dist_bias: 0.5
+      mu: 0
+      sigma: 3
+      replenish_rounds: 5
+      amplitude_factor: 0.7
+      loss_rate: 1
+
