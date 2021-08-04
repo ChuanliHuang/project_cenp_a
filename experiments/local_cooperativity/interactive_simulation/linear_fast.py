@@ -110,12 +110,9 @@ def replenish(old_nuc_comp, rr, mu, sigma, af):
     for i in range(rr):
         random_shift_no_af = generate_probability_function_no_af(mu, sigma)
         cenp_a_positions = np.argwhere(nuc_comp == 1).flatten()
-        print(cenp_a_positions)
         cooperating_positions = (cenp_a_positions + random_shift_no_af(cenp_a_positions.size)) % len(nuc_comp)
-        print(cooperating_positions)
         cooperating_positions[cenp_a_positions == cooperating_positions] = -1
         filtered_cenp_a_positions = cenp_a_positions[np.isin(cooperating_positions, cenp_a_positions)]
-        print(filtered_cenp_a_positions)
         random_shift = generate_probability_function(mu, sigma, af)
         distances_to_deposit = random_shift(filtered_cenp_a_positions.size)
         new_cenp_a_positions = filtered_cenp_a_positions + distances_to_deposit
