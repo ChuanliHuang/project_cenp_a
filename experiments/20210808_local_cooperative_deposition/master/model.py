@@ -1,63 +1,11 @@
 import scipy.stats as stats
 import numpy as np
 import random
-import matplotlib.pyplot as plt
-import pycxsimulator
-
-nucleosome_num = 1000
-cenp_a_fraction = 0.05
-dist_bias = 0.5
-mu = 0
-sigma = 3
-replenish_rounds = 7
-amplitude_factor = 1
-noise = 0
-
-
-def loading_efficiency(val=amplitude_factor):
-    global amplitude_factor
-    amplitude_factor = float(val)
-    return val
-
-
-def rounds_of_replenishment(val=replenish_rounds):
-    global replenish_rounds
-    replenish_rounds = int(val)
-    return val
-
-
-def loading_range(val=sigma):
-    global sigma
-    sigma = float(val)
-    return val
-
-
-def initial_density(val=cenp_a_fraction):
-    global cenp_a_fraction
-    cenp_a_fraction = float(val)
-    return val
-
-
-def number_of_nucleosomes(val=nucleosome_num):
-    global nucleosome_num
-    nucleosome_num = int(val)
-    return val
-
-
-def distribution_bias(val=dist_bias):
-    global dist_bias
-    dist_bias = float(val)
-    return val
-
-
-def noise_0_1(val=noise):
-    global noise
-    noise = float(val)
-    return val
+import os
 
 
 def generate_probability_function_no_af(mu, sigma):
-    """ Ivan's experiments but af is removed """
+    """ Ivan's algorithm but af is removed """
     left_wing = int(np.round(mu - 3 * sigma))
     right_wing = int(np.round(mu + 3 * sigma))
     shifts = np.arange(left_wing, right_wing + 1)
@@ -123,10 +71,6 @@ def replenish(old_nuc_comp, rr, mu, sigma, af):
 
 def dilute(old_nuc_comp, distribution_bias):
     nuc_comp = np.copy(old_nuc_comp)
-    h3_positions = np.argwhere(nuc_comp == 0).flatten()
-    for j in h3_positions:
-        if random.random() < noise:
-            nuc_comp[j] = 1
     cenp_a_positions = np.argwhere(nuc_comp == 1).flatten()
     for i in cenp_a_positions:
         if random.random() < distribution_bias:
@@ -134,28 +78,51 @@ def dilute(old_nuc_comp, distribution_bias):
     return nuc_comp
 
 
-def initialize():
-    global state
-    state = init_gen_0(nucleosome_num, cenp_a_fraction)
+def output_data(data, folder_name, lineage_num):
+    # get current working directory
+    cwd = os.getcwd()
+    # create folder if not existing
+    dir_name = cwd + '/' + folder_name
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+    # create file name
+    file_name = dir_name + '/lineage{}.csv'.format(lineage_num)
+    # save as csv
+    data = np.array(data)
+    np.savetxt(file_name, data, delimiter=',')
 
 
-def observe():
-    global state
-    density = state.sum() / len(state)
-    positions = np.argwhere(state == 1).flatten()
-    y = [1] * len(positions)
-    plt.cla()
-    plt.plot(positions, y, '.')
-    plt.title('density={}'.format(round(density, 2)))
-    plt.axis('off')
-    plt.xlim(0, len(state))
+if __name__ == '__main__':
+    import time
+    import yaml
+    from bunch import bunchify
 
+    start_time = time.perf_counter()
+    with open("parameters.yaml") as f:
+        config = yaml.load(f, Loader=yaml.Loader)
+        config = bunchify(config)
 
-def update():
-    global state
-    state = replenish(state, replenish_rounds, mu, sigma, amplitude_factor)
-    state = dilute(state, dist_bias)
+    # simulate lineages
+    for lineage in range(config.simulation.lineages_to_simulate):
+        # initiate
+        states = []
+        state = init_gen_0(config.simulation.lineage.nucleosome_num, config.simulation.lineage.cenp_a_fraction)
+        states.append(state)
+        # simulate a lineage
+        for generation in range(config.simulation.lineage.generations_to_simulate):
+            # update
+            state = replenish(state,
+                              config.simulation.lineage.generation.replenish_rounds,
+                              config.simulation.lineage.generation.mu,
+                              config.simulation.lineage.generation.sigma,
+                              config.simulation.lineage.generation.amplitude_factor)
+            state = dilute(state, config.simulation.lineage.generation.dist_bias)
+            # observe
+            states.append(state)
+            print('lineage {} generation {}'.format(lineage, generation))
+        # output states
+        output_data(states, 'states', lineage)
 
-
-pycxsimulator.GUI(parameterSetters=[loading_efficiency, rounds_of_replenishment, loading_range, initial_density,
-                                    number_of_nucleosomes, distribution_bias, noise_0_1]).start(func=[initialize, observe, update])
+    end_time = time.perf_counter()
+    rt = round(end_time - start_time, 2)
+    print('Running time: {}s'.format(rt))
