@@ -75,4 +75,4 @@ def initialize_parameters_specific_folders(s=3, rr=3, af=1):
     print('parameters-specific folders initialized')
 
 
-initialize_parameters_specific_folders(af=(0.85, 0.95, 11))
+initialize_parameters_specific_folders(rr=7, af=(0.85, 0.95, 11))

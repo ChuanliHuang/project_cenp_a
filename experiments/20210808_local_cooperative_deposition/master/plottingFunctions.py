@@ -74,4 +74,4 @@ if __name__ == '__main__':
     file_name = 'states/lineage0.csv'
     _df = pd.read_csv(file_name, sep=',', header=None, dtype='int64')
     density_evolution_map(_df)
-    show_kymograph(_df)
+    # show_kymograph(_df)

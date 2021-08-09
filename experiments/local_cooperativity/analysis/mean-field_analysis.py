@@ -23,7 +23,7 @@ def func(_x):
     return [_x[1] - g(_x[0]), _x[1] - _x[0]]
 
 
-rr = 5
+rr = 1
 af = 1
 s = 3
 
@@ -57,5 +57,5 @@ for i in np.arange(0, 1.2, 0.2):
 plt.legend()
 plt.xlabel(r'$\rho_{t}$')
 plt.ylabel(r'$\rho_{t+1}$')
-plt.title(r'$s={}$ $rr={}$'.format(s, rr))
+plt.title(r'$\sigma={}$ $\omega={}$'.format(s, rr))
 plt.show()

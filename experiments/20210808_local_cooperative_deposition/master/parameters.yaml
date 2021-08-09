@@ -1,5 +1,5 @@
 simulation:
-  lineages_to_simulate: 10
+  lineages_to_simulate: 1
   lineage:
     generations_to_simulate: 10000
     nucleosome_num: 1000
@@ -9,5 +9,5 @@ simulation:
       mu: 0
       sigma: 3
       replenish_rounds: 7
-      amplitude_factor: 1
+      amplitude_factor: 0.95
 

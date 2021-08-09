@@ -32,7 +32,7 @@ def func(_x):
     return _x - g(_x)
 
 
-rr = 3
+rr = 1
 alpha = 1
 s = 3
 beta = 1
@@ -66,18 +66,14 @@ y = np.array(y)
 plt.plot(x, y, '--', color='k', linewidth=0.5)
 # for i in np.arange(0, 0.12, 0.02):
 for i in [0, 0.2, 0.4, 0.6, 0.8, 1]:
-    beta = i
+    alpha = i
     z = [g(i) for i in x]
     z = np.array(z)
-    plt.plot(x, z, linewidth=0.5, label=r'$\beta$'+'={}'.format(round(beta, 2)))
+    plt.plot(x, z, linewidth=0.5, label=r'$\alpha$' + '={}'.format(round(alpha, 2)))
     # root = optimize.fsolve(func, [0, 0.005, 0.1])
     # plt.plot(root, root, '.', markersize=3, color='black', fillstyle='none')
 plt.legend()
 plt.xlabel(r'$\rho_{t}$')
 plt.ylabel(r'$\rho_{t+1}$')
-plt.title(r'$\alpha$={} $s={}$ $rr={}$'.format(alpha, s, rr))
+plt.title(r'$\sigma={}$ $\omega={}$'.format(s, rr))
 plt.show()
-
-
-
-
