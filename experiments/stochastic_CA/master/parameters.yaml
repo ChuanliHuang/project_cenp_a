@@ -5,6 +5,6 @@ initialDensity: 0.02
 dilutionBias: 0.5
 replenish_rounds: 3
 sigma: 3  # standard deviation of weight function (Gaussian)
-alpha: 0.3 # arbitrary parameter
+alpha: 0.45 # arbitrary parameter
 beta: 0  # loss rate
 

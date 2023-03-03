@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+plt.rcParams['savefig.dpi'] = 300
 import yaml
 from itertools import chain
 from bunch import bunchify
@@ -12,8 +13,10 @@ def density_evolution_map(df):
         density = row.sum() / config.simulation.lineage.nucleosome_num
         densities.append(density)
     plt.plot(densities)
-    plt.xlabel('generation')
-    plt.ylabel('density')
+    plt.xlabel(r'$t$')
+    plt.ylabel(r'$\rho$')
+    plt.title(r'$\alpha$={}'.format(config.simulation.lineage.generation.amplitude_factor))
+    plt.ylim(-0.05, 0.55)
     plt.show()
 
 
@@ -38,7 +41,8 @@ def show_kymograph(df):
                cmap='gray')
 
     plt.ylabel('nucleosome position')
-    plt.xlabel('generation')
+    plt.xlabel(r'$t$')
+    plt.title(r'$\alpha$={}'.format(config.simulation.lineage.generation.amplitude_factor))
     plt.show()
 
 

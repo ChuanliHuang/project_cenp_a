@@ -74,7 +74,7 @@ for i in [0, 0.001, 0.01, 0.1, 1]:
     plt.plot(x, z, linewidth=0.5, label=r'$noise_{0\rightarrow1}$'+'={}'.format(round(noise, 3)))
     root = optimize.fsolve(func, [0.5, 0.5])
     plt.plot(root[0], root[1], '.', markersize=3, color='black', fillstyle='none')
-# plt.legend()
+plt.legend()
 plt.xlim(-0.005, 0.105)
 plt.ylim(-0.005, 0.105)
 plt.xlabel(r'$\rho_{t}$')

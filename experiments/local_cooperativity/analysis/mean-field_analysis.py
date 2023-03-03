@@ -23,7 +23,7 @@ def func(_x):
     return [_x[1] - g(_x[0]), _x[1] - _x[0]]
 
 
-rr = 1
+rr = 5
 af = 1
 s = 3
 
@@ -43,7 +43,7 @@ def update():
     x = g(x)
 
 
-x = np.arange(0, 1.0001, 0.0001)
+x = np.arange(0, 1.001, 0.001)
 y = [i for i in x]
 y = np.array(y)
 plt.plot(x, y, '--', color='k', linewidth=0.5)
@@ -51,11 +51,15 @@ for i in np.arange(0, 1.2, 0.2):
     af = i
     z = [g(i) for i in x]
     z = np.array(z)
-    plt.plot(x, z, linewidth=0.5, label='af={}'.format(round(af, 2)))
-    # root = optimize.fsolve(func, [0, 0])
-    # plt.plot(root[0], root[1], '.', markersize=3, color='black', fillstyle='none')
+    plt.plot(x, z, linewidth=0.5, label=r'$\alpha$={}'.format((round(af, 2))))
+    root = optimize.fsolve(func, [0.25, 0.25])
+    if root[0] == root[1]:
+        plt.plot(root[0], root[1], '.', markersize=3, color='black', fillstyle='none')
+    root = optimize.fsolve(func, [0.5, 0.5])
+    if root[0] == root[1]:
+        plt.plot(root[0], root[1], '.', markersize=3, color='black', fillstyle='none')
 plt.legend()
 plt.xlabel(r'$\rho_{t}$')
 plt.ylabel(r'$\rho_{t+1}$')
-plt.title(r'$\sigma={}$ $\omega={}$'.format(s, rr))
+# plt.title(r'$\sigma={}$ $\omega={}$'.format(s, rr))
 plt.show()
