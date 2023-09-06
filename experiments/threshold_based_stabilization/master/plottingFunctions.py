@@ -85,7 +85,8 @@ if __name__ == '__main__':
     # show_kymograph(_df)
 
     for l in range(config.lineages_to_simulate):
-        file_name = '/Users/kikawaryoku/PycharmProjects/project_cenp_a/experiments/threshold_based_simulation/master/states/lineage'+ str(l) +'.csv'
+        file_name = '/Users/kikawaryoku/PycharmProjects/project_cenp_a/experiments/threshold_based_simulation/master/states/lineage' + str(
+            l) + '.csv'
         _df = pd.read_csv(file_name, sep=',', header=None, dtype='int64')
         density_evolution_map(_df)
     plt.xlabel('generation')

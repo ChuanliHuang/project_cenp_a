@@ -30,10 +30,12 @@ def hopkins_evolution(df):
             H = np.nan
         Hs.append(H)
     plt.plot(Hs)
-    x = np.arange(-0.1 * config.simulation.lineage.generations_to_simulate, 1.1 * config.simulation.lineage.generations_to_simulate)
+    x = np.arange(-0.1 * config.simulation.lineage.generations_to_simulate,
+                  1.1 * config.simulation.lineage.generations_to_simulate)
     y = [0.5 for i in x]
     plt.plot(x, y, '--', color='grey')
-    plt.xlim(-0.05 * config.simulation.lineage.generations_to_simulate, 1.05 * config.simulation.lineage.generations_to_simulate)
+    plt.xlim(-0.05 * config.simulation.lineage.generations_to_simulate,
+             1.05 * config.simulation.lineage.generations_to_simulate)
     plt.ylim(-0.05, 1.05)
     plt.xlabel(r'$t$')
     plt.ylabel('H')
